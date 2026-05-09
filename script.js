@@ -584,7 +584,7 @@ const rawData = [
     // 过滤掉可能的无效条目（自动保护）
     const cleanData = rawData.filter(item => Array.isArray(item) && item.length >= 5);
 
-    // 数据转换
+       // 数据转换
     const heritageData = cleanData.map((item, index) => {
         const name = item[0] || '未知项目';
         const category = item[1] || '其他';
@@ -592,11 +592,23 @@ const rawData = [
         const level = item[3] || '省级';
         const steps = item[4] || [];
         const imageFile = (item[5] && item[5].startsWith('item-')) ? item[5] : '';
-        const descObj = (item[6] && Object.keys(item[6]).length > 0) ? item[6] : {
-            '项目简介': `${name}是湖北省${level}非物质文化遗产，流传于${city}地区，承载着独特的历史文化记忆。`,
-            '传承故事': '该项目由历代传承人守护，至今仍保持活态传承。',
-            '文化价值': '荆楚文化的重要组成部分，具有重要的历史、艺术和科学价值。'
-        };
+
+        // 1. 先用 descriptions.js 里手写的介绍
+        // 2. 如果没有，再用 rawData 里本地的介绍
+        // 3. 都没有，就用默认模板
+        let descObj;
+        if (typeof itemDescriptions !== 'undefined' && itemDescriptions[name]) {
+            descObj = itemDescriptions[name];
+        } else if (item[6] && Object.keys(item[6]).length > 0) {
+            descObj = item[6];
+        } else {
+            descObj = {
+                '项目简介': `${name}是湖北省${level}非物质文化遗产，流传于${city}地区，承载着独特的历史文化记忆。`,
+                '传承故事': '该项目由历代传承人守护，至今仍保持活态传承。',
+                '文化价值': '荆楚文化的重要组成部分，具有重要的历史、艺术和科学价值。'
+            };
+        }
+
         return {
             id: index + 1,
             name,
@@ -609,7 +621,6 @@ const rawData = [
             audioFreq: [440 + Math.floor(Math.random() * 220), 554, 659]
         };
     });
-
     // ==================== 全局状态 ====================
     let currentBgIndex = 0;
     const bgSlides = document.querySelectorAll('.bg-slide');
@@ -1364,7 +1375,8 @@ const rawData = [
         };
     }
     function drawJzLine(x, y) {
-        jzCtx.strokeStyle = 'rgba(255,255,255,0.8)'; jzCtx.lineWidth = jzBrush; jzCtx.lineCap = 'round';
+        jzCtx.
+        strokeStyle = 'rgba(255,255,255,0.8)'; jzCtx.lineWidth = jzBrush; jzCtx.lineCap = 'round';
         jzCtx.lineTo(x, y); jzCtx.stroke(); jzCtx.beginPath(); jzCtx.moveTo(x, y);
         if (jzMirror) {
             const mx = jzCanvas.width - x;
