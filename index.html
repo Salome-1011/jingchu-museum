@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>荆楚遗韵 · 沉浸式非遗数字博物馆</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 全屏背景轮播层 -->
+    <div class="bg-carousel-layer" id="bgCarousel">
+        <div class="bg-slide active zoom-in" data-bg="landscape"></div>
+        <div class="bg-slide" data-bg="bronze"></div>
+        <div class="bg-slide" data-bg="lacquer"></div>
+        <div class="bg-slide" data-bg="theater"></div>
+        <div class="bg-slide" data-bg="craft"></div>
+    </div>
+    <div class="bg-overlay"></div>
+    <div class="particles-layer" id="particlesLayer"></div>
+
+    <div class="main-container">
+
+        <!-- 导航栏 -->
+        <nav class="sticky-nav" id="stickyNav">
+            <div class="nav-logo">🏛️ 荆楚遗韵</div>
+            <ul class="nav-links">
+                <li><a href="#hero">首页</a></li>
+                <li><span class="nav-divider">|</span></li>
+                <li><a href="#gallery">非遗名录</a></li>
+                <li><span class="nav-divider">|</span></li>
+                <li><a href="#workshops">非遗工坊</a></li>
+                <li><span class="nav-divider">|</span></li>
+                <li><a href="#daily">每日一签</a></li>
+                <li><span class="nav-divider">|</span></li>
+                <li><a href="#footer-section">点亮传承</a></li>
+            </ul>
+        </nav>
+
+        <!-- 序幕 Hero -->
+        <section class="hero-section" id="hero">
+            <h1 class="hero-title" id="heroTitle"></h1>
+            <p class="hero-subtitle">光影流转 · 非遗万象</p>
+            <a href="#gallery" class="btn-enter">进入博物馆</a>
+            <div class="hero-scroll-hint" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">
+                <span>漫步时光长廊</span>
+                <div class="arrow-down"></div>
+            </div>
+        </section>
+
+        <!-- 瑰宝长廊 -->
+        <section class="gallery-section" id="gallery">
+            <h2 class="section-title">瑰 宝 长 廊</h2>
+            <p class="section-subtitle">—— 荆楚非物质文化遗产精选 ——</p>
+            <div class="search-box" style="text-align:center; margin-bottom:1rem;">
+                <input type="text" id="searchInput" placeholder="搜索非遗项目..." 
+                       style="width:280px; padding:0.5rem 1.2rem; border-radius:40px; border:1px solid rgba(212,168,73,0.4); background:rgba(20,15,10,0.5); backdrop-filter:blur(10px); color:var(--xuanzhi); font-size:0.9rem;">
+            </div>
+            <div class="filter-bar" id="filterBar">
+                <div class="filter-group">
+                    <span class="filter-label">🏷️ 类别</span>
+                    <button class="filter-chip active" data-filter-cat="all">全部</button>
+                    <button class="filter-chip" data-filter-cat="戏剧">戏剧</button>
+                    <button class="filter-chip" data-filter-cat="技艺">技艺</button>
+                    <button class="filter-chip" data-filter-cat="美术">美术</button>
+                    <button class="filter-chip" data-filter-cat="民间文学">民间文学</button>
+                    <button class="filter-chip" data-filter-cat="传统音乐">传统音乐</button>
+                    <button class="filter-chip" data-filter-cat="传统舞蹈">传统舞蹈</button>
+                    <button class="filter-chip" data-filter-cat="曲艺">曲艺</button>
+                    <button class="filter-chip" data-filter-cat="民俗">民俗</button>
+                    <button class="filter-chip" data-filter-cat="传统体育、游艺与杂技">传统体育</button>
+                    <button class="filter-chip" data-filter-cat="传统医药">传统医药</button>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">📍 城市</span>
+                    <button class="filter-chip active" data-filter-city="all">全部</button>
+                    <button class="filter-chip" data-filter-city="武汉">武汉</button>
+                    <button class="filter-chip" data-filter-city="荆州">荆州</button>
+                    <button class="filter-chip" data-filter-city="随州">随州</button>
+                    <button class="filter-chip" data-filter-city="宜昌">宜昌</button>
+                    <button class="filter-chip" data-filter-city="襄阳">襄阳</button>
+                    <button class="filter-chip" data-filter-city="恩施">恩施</button>
+                    <button class="filter-chip" data-filter-city="十堰">十堰</button>
+                    <button class="filter-chip" data-filter-city="黄冈">黄冈</button>
+                    <button class="filter-chip" data-filter-city="孝感">孝感</button>
+                    <button class="filter-chip" data-filter-city="咸宁">咸宁</button>
+                    <button class="filter-chip" data-filter-city="黄石">黄石</button>
+                    <button class="filter-chip" data-filter-city="鄂州">鄂州</button>
+                    <button class="filter-chip" data-filter-city="荆门">荆门</button>
+                    <button class="filter-chip" data-filter-city="仙桃">仙桃</button>
+                    <button class="filter-chip" data-filter-city="潜江">潜江</button>
+                    <button class="filter-chip" data-filter-city="天门">天门</button>
+                    <button class="filter-chip" data-filter-city="神农架">神农架</button>
+                </div>
+            </div>
+            <div class="cards-grid" id="cardsGrid"></div>
+            <div id="loadMoreContainer" style="text-align:center; margin-top:2rem;"></div>
+        </section>
+
+        <!-- 非遗工坊 -->
+        <section class="gallery-section" id="workshops">
+            <h2 class="section-title">非 遗 工 坊</h2>
+            <p class="section-subtitle">—— 指尖传习，匠心体验 ——</p>
+            <div class="workshop-tabs" style="display:flex; gap:0.5rem; justify-content:center; margin-bottom:1.5rem; flex-wrap:wrap;">
+                <button class="filter-chip active" id="tabLacquer" onclick="switchWorkshop('lacquer')">🏺 漆器绘制</button>
+                <button class="filter-chip" id="tabTaohua" onclick="switchWorkshop('taohua')">🧵 黄梅挑花</button>
+                <button class="filter-chip" id="tabJianzhi" onclick="switchWorkshop('jianzhi')">✂️ 雕花剪纸</button>
+            </div>
+            <!-- 漆器 -->
+            <div id="workshop-lacquer" class="workshop-panel">
+                <div class="craft-workshop">
+                    <div style="display:flex; gap:1rem; justify-content:center; margin-bottom:0.8rem; flex-wrap:wrap;">
+                        <button class="filter-chip" onclick="setBrush(2)" style="background:#C73E3A; color:#fff;">细笔</button>
+                        <button class="filter-chip" onclick="setBrush(6)" style="background:#6b5a3e; color:#fff;">中笔</button>
+                        <button class="filter-chip" onclick="setBrush(12)" style="background:#1a1a1a; color:#fff;">粗笔</button>
+                        <span style="color:var(--chijin);">|</span>
+                        <button class="filter-chip" style="background:#C73E3A; color:white;" onclick="setColor('#C73E3A')">朱砂红</button>
+                        <button class="filter-chip" style="background:#1a1a1a; color:white;" onclick="setColor('#1a1a1a')">玄黑</button>
+                        <button class="filter-chip" style="background:#D4A849; color:#1a1a1a;" onclick="setColor('#D4A849')">赤金</button>
+                        <button class="filter-chip" onclick="clearLacquerCanvas()">清空</button>
+                        <button class="filter-chip" onclick="saveLacquerCanvas()" style="background:var(--chijin); color:black;">💾 保存</button>
+                    </div>
+                    <canvas id="lacquerCanvas" style="display:block; width:100%; aspect-ratio:1/1; background:#2a1f1a; border-radius:12px; border:2px solid rgba(212,168,73,0.3); touch-action:none; max-width:500px; margin:0 auto;"></canvas>
+                </div>
+            </div>
+            <!-- 挑花 -->
+            <div id="workshop-taohua" class="workshop-panel" style="display:none;">
+                <div class="craft-workshop" id="taohuaWorkshop">
+                    <div class="workshop-header"><span class="workshop-title">🧵 黄梅挑花 · 十字绣填色</span></div>
+                    <div class="workshop-controls">
+                        <div class="color-palette">
+                            <button class="color-btn active" style="background:#C73E3A" data-color="#C73E3A"></button>
+                            <button class="color-btn" style="background:#E8A849" data-color="#E8A849"></button>
+                            <button class="color-btn" style="background:#3A5A4A" data-color="#3A5A4A"></button>
+                            <button class="color-btn" style="background:#2A3A6A" data-color="#2A3A6A"></button>
+                            <button class="color-btn" style="background:#6A3A5A" data-color="#6A3A5A"></button>
+                            <button class="color-btn" style="background:#F5F0E8" data-color="#F5F0E8"></button>
+                        </div>
+                        <div class="template-buttons">
+                            <button class="filter-chip" onclick="setTaohuaTemplate('diamond')">◇ 菱形纹</button>
+                            <button class="filter-chip" onclick="setTaohuaTemplate('eightflower')">✿ 八角花</button>
+                            <button class="filter-chip" onclick="setTaohuaTemplate('swastika')">卍 字纹</button>
+                            <button class="filter-chip" onclick="clearTaohua()">清空</button>
+                            <button class="filter-chip" onclick="saveTaohua()" style="background:var(--chijin); color:black;">💾 保存</button>
+                        </div>
+                    </div>
+                    <div class="grid-container" id="taohuaGrid"></div>
+                    <div class="workshop-hint">💡 点击格子填入针脚</div>
+                </div>
+            </div>
+            <!-- 剪纸 -->
+            <div id="workshop-jianzhi" class="workshop-panel" style="display:none;">
+                <div class="craft-workshop" id="jianzhiWorkshop">
+                    <div class="workshop-header"><span class="workshop-title">✂️ 雕花剪纸 · 对称镂空</span></div>
+                    <div class="workshop-controls">
+                        <button class="filter-chip" onclick="setJianzhiBrush(2)">细刃</button>
+                        <button class="filter-chip" onclick="setJianzhiBrush(5)">中刃</button>
+                        <button class="filter-chip" onclick="setJianzhiBrush(10)">粗刃</button>
+                        <button class="filter-chip" onclick="toggleMirror()">🔄 镜像开/关</button>
+                        <button class="filter-chip" onclick="clearJianzhi()">清空</button>
+                        <button class="filter-chip" onclick="cutPaper()" style="background:var(--zhusha); color:white;">✂️ 剪刻</button>
+                        <button class="filter-chip" onclick="saveJianzhi()" style="background:var(--chijin); color:black;">💾 保存</button>
+                    </div>
+                    <canvas id="jianzhiCanvas" style="display:block; width:100%; aspect-ratio:1/1; background:#C73E3A; border-radius:12px; border:2px solid rgba(212,168,73,0.3); touch-action:none; max-width:500px; margin:0 auto;"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 每日一签 -->
+        <section class="daily-section" id="daily">
+            <h2 class="section-title">每 日 一 签</h2>
+            <p class="section-subtitle">—— 抽取你的非遗箴言 ——</p>
+            <div class="daily-card" id="dailyCard" onclick="drawFortune()">
+                <div class="incense-glow"></div>
+                <div class="daily-title">🎋 点击抽取签文</div>
+                <div class="daily-fortune" id="fortuneText">— 静候有缘 —</div>
+                <div class="daily-hint">轻触香火，抽取今日运势</div>
+            </div>
+        </section>
+        <!-- ==================== 非遗许愿墙 ==================== -->
+<section class="gallery-section" id="wishWall">
+    <h2 class="section-title">🧧 非遗许愿墙</h2>
+    <p class="section-subtitle">—— 写下你对非遗的祝愿，贴在楚帛墙上 ——</p>
+    
+    <!-- 输入区 -->
+    <div style="max-width:500px; margin:0 auto 1.5rem; text-align:center;">
+        <textarea id="wallWishInput" maxlength="80" placeholder="写下你对某个非遗项目的心愿或祝福...（最多80字）"
+                  style="width:100%; height:60px; background:rgba(255,255,255,0.08); border:1px solid rgba(212,168,73,0.4); border-radius:12px; color:var(--xuanzhi); padding:0.6rem; font-family:'KaiTi',serif; resize:none; font-size:0.9rem; backdrop-filter:blur(8px);"></textarea>
+        <select id="wallItemSelect" style="margin-top:0.5rem; padding:0.4rem 1rem; border-radius:20px; background:rgba(30,20,15,0.6); border:1px solid rgba(212,168,73,0.4); color:var(--xuanzhi); font-family:'KaiTi',serif; font-size:0.85rem;">
+            <option value="">选择关联非遗（可选）</option>
+        </select>
+        <button class="filter-chip" onclick="submitWallWish()" style="margin-top:0.5rem; background:var(--chijin); color:#1a1a1a; display:block; margin-left:auto; margin-right:auto;">📝 贴到墙上</button>
+    </div>
+
+    <!-- 许愿墙网格 -->
+    <div class="wish-wall-grid" id="wishWallGrid"></div>
+</section>
+        <!-- 页脚 -->
+        <footer class="footer-section" id="footer-section">
+            <canvas class="footer-canvas" id="lanternCanvas"></canvas>
+            <div class="footer-content">
+                <h2 class="footer-title">薪 火 相 传</h2>
+                <p class="footer-desc">点击下方按钮，点亮一盏孔明灯</p>
+                <div class="lantern-counter" id="lanternCount">🕯️ 0 盏</div>
+               <div style="position:relative; display:inline-block;">
+                    <button class="btn-lantern" id="btnLantern">✨ 点亮传承 ✨</button>
+                    <div id="wishInputBox" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(30,20,15,0.95); backdrop-filter:blur(16px); border-radius:20px; padding:2rem; border:1px solid rgba(212,168,73,0.4); z-index:999; width:300px; text-align:center;">
+                        <p style="color:var(--chijin); font-family:'KaiTi',serif; margin-bottom:1rem;">🏮 写下你的心愿</p>
+                        <textarea id="wishInput" maxlength="60" placeholder="愿此灯火，照亮心中所念..." 
+                                  style="width:100%; height:70px; background:rgba(255,255,255,0.08); border:1px solid rgba(212,168,73,0.5); border-radius:10px; color:var(--xuanzhi); padding:0.6rem; font-family:'KaiTi',serif; resize:none; font-size:1rem;"></textarea>
+                        <div style="display:flex; gap:0.5rem; justify-content:center; margin-top:1rem;">
+                            <button class="filter-chip" onclick="submitWish()" style="background:var(--chijin); color:#1a1a1a;">放飞许愿灯</button>
+                            <button class="filter-chip" onclick="hideWishInput()">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    <!-- 详情弹窗 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container" id="modalContainer">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-visual">
+                <div class="modal-image-slider" id="modalSlider"></div>
+                <div class="slider-dots" id="sliderDots"></div>
+            </div>
+            <div class="modal-info">
+                <div id="imageSearchBtnContainer"></div>
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <div class="modal-tags" id="modalTags"></div>
+                <div class="accordion" id="modalAccordion"></div>
+                <div class="mini-game-zone" id="miniGameZone">
+                    <div class="mini-game-title">🧩 工艺流程拼图</div>
+                    <div class="game-slots" id="gameSlots"></div>
+                    <div class="game-pool" id="gamePool"></div>
+                    <div class="game-feedback" id="gameFeedback"></div>
+                    <div class="achievement-badge" id="achievementBadge">
+                        <div class="badge-circle">🏅</div>
+                        <div style="color:var(--chijin);margin-top:0.3rem;font-size:0.8rem;">大师认证</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+    <script src="script.js"></script>
+</body>
+</html>
